@@ -10,7 +10,7 @@
   "license": "MIT",
   "authors": [
     {
-      "name": "Stripe and contributors",
+      "name": "Conekta  and contributors",
       "homepage": "https://github.com/conekta/conekta-php/contributors"
     }
   ],
@@ -24,6 +24,6 @@
     "vierbergenlars/simpletest": "*"
   },
   "autoload": {
-    "classmap": ["lib/Stripe/"]
+    "classmap": ["lib/Conekta/"]
   }
 }
