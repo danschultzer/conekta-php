@@ -12,7 +12,7 @@ abstract class Conekta_SingletonApiResource extends Conekta_ApiResource
   public static function classUrl($class)
   {
     $base = self::className($class);
-    return "/v1/${base}";
+    return "/${base}";
   }
 
   public function instanceUrl()

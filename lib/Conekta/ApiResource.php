@@ -35,7 +35,7 @@ abstract class Conekta_ApiResource extends Conekta_Object
   public static function classUrl($class)
   {
     $base = self::_scopedLsb($class, 'className', $class);
-    return "/v1/${base}s";
+    return "/${base}s";
   }
 
   public function instanceUrl()

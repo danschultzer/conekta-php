@@ -77,9 +77,9 @@ class Conekta_ApiRequestor
 
   public function handleApiError($rbody, $rcode, $resp)
   {
-    if (!is_array($resp) || !isset($resp['error']))
+    if (!is_array($resp) || (!isset($resp['object']) && $resp['object'] != 'error') )
       throw new Conekta_ApiError("Invalid response object from API: $rbody (HTTP response code was $rcode)", $rcode, $rbody, $resp);
-    $error = $resp['error'];
+    $error = $resp;
     switch ($rcode) {
     case 400:
     case 404:
@@ -117,9 +117,9 @@ class Conekta_ApiRequestor
 		'uname' => $uname);
     $headers = array('X-Conekta-Client-User-Agent: ' . json_encode($ua),
 		     'User-Agent: Conekta/v1 PhpBindings/' . Conekta::VERSION,
-                     'Authorization: Bearer ' . $myApiKey);
+                     'Authorization: Basic ' . base64_encode($myApiKey . ':' ));
     if (Conekta::$apiVersion)
-      $headers[] = 'Conekta-Version: ' . Conekta::$apiVersion;
+      $headers[] = 'Accept: application/vnd.conekta-v' . Conekta::$apiVersion . '+json';
     list($rbody, $rcode) = $this->_curlRequest($meth, $absUrl, $headers, $params);
     return array($rbody, $rcode, $myApiKey);
   }

@@ -4,7 +4,7 @@ abstract class Conekta
 {
   public static $apiKey;
   public static $apiBase = 'https://api.conekta.io';
-  public static $apiVersion = null;
+  public static $apiVersion = '0.2.0';
   public static $verifySslCerts = true;
   const VERSION = '1.8.3';
 
