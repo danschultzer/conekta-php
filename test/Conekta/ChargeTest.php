@@ -27,4 +27,14 @@ class Conekta_ChargeTest extends UnitTestCase
     $d = Conekta_Charge::retrieve($c->id);
     $this->assertEqual($d->id, $c->id);
   }
+  
+  public function testRefund()
+  {
+	authorizeFromEnv();  
+	$c = Conekta_Charge::create(array('amount' => 2000,
+				    'currency' => 'mxn', 'description' => 'Some desc',
+				    'card' => array('number' => '4242424242424242', 'exp_month' => 5, 'exp_year' => 2015, 'cvc' => 123, 'name' => 'Mario Moreno')));
+    $c->refund();
+    $this->assertTrue($c->status == "refunded");
+  }
 }
