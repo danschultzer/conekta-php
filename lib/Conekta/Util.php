@@ -49,12 +49,13 @@ abstract class Conekta_Util
       'plan' => 'Conekta_Plan',
       'recipient' => 'Conekta_Recipient'
     );
-    if (self::isList($resp)) {
-      $mapped = array();
-      foreach ($resp as $i)
-        array_push($mapped, self::convertToConektaObject($i, $apiKey));
-      return $mapped;
-    } else if (is_array($resp)) {
+    //if (self::isList($resp)) {
+      //$mapped = array();
+      //foreach ($resp as $i)
+        //array_push($mapped, self::convertToConektaObject($i, $apiKey));
+      //return $mapped;
+    //} else 
+    if (is_array($resp)) {
       if (isset($resp['object']) && is_string($resp['object']) && isset($types[$resp['object']]))
         $class = $types[$resp['object']];
       else
