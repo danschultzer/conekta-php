@@ -78,7 +78,7 @@ class Conekta_Customer extends Conekta_ApiResource
   {
     $requestor = new Conekta_ApiRequestor($this->_apiKey);
     $url = $this->instanceUrl() . '/subscription';
-    list($response, $apiKey) = $requestor->request('post', $url, $params);
+    list($response, $apiKey) = $requestor->request('put', $url, $params);
     $this->refreshFrom(array('subscription' => $response), $apiKey, true);
     return $this->subscription;
   }
