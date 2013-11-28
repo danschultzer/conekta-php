@@ -152,6 +152,9 @@ class Conekta_ApiRequestor
     } else if ($meth == 'post') {
       $opts[CURLOPT_POST] = 1;
       $opts[CURLOPT_POSTFIELDS] = self::encode($params);
+     } else if ($meth == 'put') {
+      $opts[CURLOPT_PUT] = 1;
+      $opts[CURLOPT_POSTFIELDS] = self::encode($params);
     } else if ($meth == 'delete')  {
       $opts[CURLOPT_CUSTOMREQUEST] = 'DELETE';
       if (count($params) > 0) {

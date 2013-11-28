@@ -91,7 +91,7 @@ abstract class Conekta_ApiResource extends Conekta_Object
         $params[$k] = $v;
       }
       $url = $this->instanceUrl();
-      list($response, $apiKey) = $requestor->request('post', $url, $params);
+      list($response, $apiKey) = $requestor->request('put', $url, $params);
       $this->refreshFrom($response, $apiKey);
     }
     return $this;
