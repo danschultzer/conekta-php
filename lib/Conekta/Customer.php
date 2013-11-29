@@ -73,6 +73,12 @@ class Conekta_Customer extends Conekta_ApiResource
     $charges = Conekta_Charge::all($params, $this->_apiKey);
     return $charges;
   }
+  
+  public static function update($id, $params=null)
+  {
+    $class = get_class();
+    return self::_scopedUpdate($class, $id, $params);
+  }
 
   public function updateSubscription($params=null)
   {

@@ -91,7 +91,7 @@ abstract class Conekta_ApiResource extends Conekta_Object
         $params[$k] = $v;
       }
       $url = $this->instanceUrl();
-      list($response, $apiKey) = $requestor->request('put', $url, $params);
+      list($response, $apiKey) = $requestor->request('post', $url, $params);
       $this->refreshFrom($response, $apiKey);
     }
     return $this;
@@ -105,5 +105,17 @@ abstract class Conekta_ApiResource extends Conekta_Object
     list($response, $apiKey) = $requestor->request('delete', $url, $params);
     $this->refreshFrom($response, $apiKey);
     return $this;
+  }
+  
+  protected function _scopedUpdate($class, $id, $params=null, $apiKey=null)
+  {
+    self::_validateCall('update', $params, $apiKey);
+    echo "validate call";
+    $requestor = new Conekta_ApiRequestor($apiKey);
+    echo "requestor";
+    $url = self::_scopedLsb($class, 'classUrl', $class);
+    $url = $url . '/' . $id;
+    list($response, $apiKey) = $requestor->request('put', $url, $params);
+    return Conekta_Util::convertToConektaObject($response, $apiKey);
   }
 }

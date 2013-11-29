@@ -2,6 +2,7 @@
 
 class Conekta_Plan extends Conekta_ApiResource
 {
+	
   public static function constructFrom($values, $apiKey=null)
   {
     $class = get_class();
@@ -24,6 +25,13 @@ class Conekta_Plan extends Conekta_ApiResource
   {
     $class = get_class();
     return self::_scopedDelete($class, $params);
+  }
+  
+  
+  public static function update($id, $params=null)
+  {
+    $class = get_class();
+    return self::_scopedUpdate($class, $id, $params);
   }
   
   public function save()
