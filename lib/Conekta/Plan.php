@@ -27,11 +27,10 @@ class Conekta_Plan extends Conekta_ApiResource
     return self::_scopedDelete($class, $params);
   }
   
-  
-  public static function update($id, $params=null)
+  public function update($params=null)
   {
     $class = get_class();
-    return self::_scopedUpdate($class, $id, $params);
+    return self:: _scopedUpdate($class);
   }
   
   public function save()

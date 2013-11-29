@@ -74,28 +74,40 @@ class Conekta_Customer extends Conekta_ApiResource
     return $charges;
   }
   
-  public static function update($id, $params=null)
+  public function update($params=null)
   {
     $class = get_class();
-    return self::_scopedUpdate($class, $id, $params);
+    return self:: _scopedUpdate($class);
   }
-
-  public function updateSubscription($params=null)
+  
+  public function updateSubscription($params=null, $apiKey=null)
   {
-    $requestor = new Conekta_ApiRequestor($this->_apiKey);
-    $url = $this->instanceUrl() . '/subscription';
-    list($response, $apiKey) = $requestor->request('put', $url, $params);
-    $this->refreshFrom(array('subscription' => $response), $apiKey, true);
-    return $this->subscription;
+	$class = get_class();
+    return self:: _scopedModifyMember($class, 'put', 'subscription', null, $params);
   }
-
-  public function cancelSubscription($params=null)
+  
+  public function createSubscription($params=null, $apiKey=null)
   {
-    $requestor = new Conekta_ApiRequestor($this->_apiKey);
-    $url = $this->instanceUrl() . '/subscription';
-    list($response, $apiKey) = $requestor->request('delete', $url, $params);
-    $this->refreshFrom(array('subscription' => $response), $apiKey, true);
-    return $this->subscription;
+	$class = get_class();
+    return self:: _scopedModifyMember($class, 'post', 'subscription', null, $params);
+  }
+  
+  public function cancelSubscription($params=null, $apiKey=null)
+  {
+	$class = get_class();
+    return self:: _scopedModifyMember($class, 'post', 'subscription', 'cancel');
+  }
+  
+  public function pauseSubscription($params=null, $apiKey=null)
+  {
+	$class = get_class();
+    return self:: _scopedModifyMember($class, 'post', 'subscription', 'pause');
+  }
+  
+  public function resumeSubscription($params=null, $apiKey=null)
+  {
+    $class = get_class();
+    return self:: _scopedModifyMember($class, 'post', 'subscription', 'resume');
   }
 
   public function deleteDiscount()

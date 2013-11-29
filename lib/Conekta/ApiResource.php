@@ -107,15 +107,57 @@ abstract class Conekta_ApiResource extends Conekta_Object
     return $this;
   }
   
-  protected function _scopedUpdate($class, $id, $params=null, $apiKey=null)
+  protected function _scopedUpdate($class, $params=null)
   {
-    self::_validateCall('update', $params, $apiKey);
-    echo "validate call";
-    $requestor = new Conekta_ApiRequestor($apiKey);
-    echo "requestor";
-    $url = self::_scopedLsb($class, 'classUrl', $class);
-    $url = $url . '/' . $id;
+    self::_validateCall('update', $params);
+    $requestor = new Conekta_ApiRequestor($this->_apiKey);
+    $url = $this->instanceUrl();
     list($response, $apiKey) = $requestor->request('put', $url, $params);
-    return Conekta_Util::convertToConektaObject($response, $apiKey);
+    $this->refreshFrom($response, $apiKey, false);
+    return $this;
   }
+  
+  protected function _scopedModifyMember($class, $method, $member, $action=null, $params=null)
+  {
+    self::_validateCall('update', $params);
+    $requestor = new Conekta_ApiRequestor($this->_apiKey);
+    if ($action) {
+		$url = $this->instanceUrl() . '/' . $member . '/' . $action;
+	} else {
+		$url = $this->instanceUrl() . '/' . $member;
+	}
+    list($response, $apiKey) = $requestor->request($method, $url, $params);
+    $this->refreshFrom(array($member => $response), $apiKey, true);
+    return $this;
+  }
+  
+  //protected function _scopedUpdate($class, $id, $params=null, $apiKey=null)
+  //{
+    //self::_validateCall('update', $params, $apiKey);
+    //$requestor = new Conekta_ApiRequestor($apiKey);
+    //$url = self::_scopedLsb($class, 'classUrl', $class);
+    //$url = $url . '/' . $id;
+    //list($response, $apiKey) = $requestor->request('put', $url, $params);
+    //return Conekta_Util::convertToConektaObject($response, $apiKey);
+  //}
+  
+  //protected function _scopedUpdateMember($class, $id, $member, $params=null, $apiKey=null)
+  //{
+    //self::_validateCall('update', $params, $apiKey);
+    //$requestor = new Conekta_ApiRequestor($apiKey);
+    //$url = self::_scopedLsb($class, 'classUrl', $class);
+    //$url = $url . '/' . $id . '/'. $member;
+    //list($response, $apiKey) = $requestor->request('put', $url, $params);
+    //return Conekta_Util::convertToConektaObject($response, $apiKey);
+  //}
+  
+  //protected function _scopedModifyMember($class, $id, $member, $method, $params=null, $apiKey=null)
+  //{
+    //self::_validateCall('update', $params, $apiKey);
+    //$requestor = new Conekta_ApiRequestor($apiKey);
+    //$url = self::_scopedLsb($class, 'classUrl', $class);
+    //$url = $url . '/' . $id . '/'. $member;
+    //list($response, $apiKey) = $requestor->request($method, $url, $params);
+    //return Conekta_Util::convertToConektaObject($response, $apiKey);
+  //}
 }
