@@ -152,7 +152,7 @@ abstract class Conekta_ApiResource extends Conekta_Object
 	$obj->$parent = &$this;    
     // Is it a array (Conekta_Object)?
     if (strcmp(get_class($this->$member), 'Conekta_Object') == 0) {
-		$count = count($this->cards->keys());
+		$count = count($this->$member->keys());
 		$this->$member->__set($count, $obj);
 	} else {
 		$this->refreshFrom(array($member => $response), $apiKey, true);
