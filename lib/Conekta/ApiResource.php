@@ -117,14 +117,14 @@ abstract class Conekta_ApiResource extends Conekta_Object
     return $this;
   }
   
-  protected function _scopedModifyMember($class, $parent, $params=null, $action, $method)
+  protected function _scopedModifyMember($class, $parent, $member, $params=null, $action, $method)
   {
     self::_validateCall('delete');
     $requestor = new Conekta_ApiRequestor($this->_apiKey);
     $url = $this->instanceUrl() . '/' . $action;
     list($response, $apiKey) = $requestor->request($method, $url, $params);
     $this->refreshFrom($response, $apiKey);
-    $this->$parent->subscription = $this;
+    $this->$parent->$member = $this;
     return $this;
   }
   

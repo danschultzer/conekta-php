@@ -30,19 +30,19 @@ class Conekta_Subscription extends Conekta_ApiResource
   public function cancel($params=null)
   {
     $class = get_class();
-    return self::_scopedModifyMember($class, 'customer', $params, 'cancel', 'post');
+    return self::_scopedModifyMember($class, 'customer', 'subscription', $params, 'cancel', 'post');
   }
   
   public function pause($params=null)
   {
     $class = get_class();
-    return self::_scopedModifyMember($class, 'customer', $params, 'pause', 'post');
+    return self::_scopedModifyMember($class, 'customer', 'subscription', $params, 'pause', 'post');
   }
   
   public function resume($params=null)
   {
     $class = get_class();
-    return self::_scopedModifyMember($class, 'customer', $params, 'resume', 'post');
+    return self::_scopedModifyMember($class, 'customer', 'subscription', $params, 'resume', 'post');
   }
   
 
