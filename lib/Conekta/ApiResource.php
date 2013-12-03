@@ -117,18 +117,47 @@ abstract class Conekta_ApiResource extends Conekta_Object
     return $this;
   }
   
-  protected function _scopedModifyMember($class, $method, $member, $action=null, $params=null)
+  protected function _scopedModifyMember($class, $parent, $params=null, $action, $method)
+  {
+    self::_validateCall('delete');
+    $requestor = new Conekta_ApiRequestor($this->_apiKey);
+    $url = $this->instanceUrl() . '/' . $action;
+    list($response, $apiKey) = $requestor->request($method, $url, $params);
+    $this->refreshFrom($response, $apiKey);
+    $this->$parent->subscription = $this;
+    return $this;
+  }
+  
+  protected function _scopedCreateMember($class, $member, $params=null)
   {
     self::_validateCall('update', $params);
     $requestor = new Conekta_ApiRequestor($this->_apiKey);
-    if ($action) {
-		$url = $this->instanceUrl() . '/' . $member . '/' . $action;
+    $url = $this->instanceUrl() . '/' . $member;
+    list($response, $apiKey) = $requestor->request('post', $url, $params);
+    $types = array(
+	  'Conekta_Card' => 'card',
+	  'Conekta_Charge' => 'charge',
+	  'Conekta_Customer' => 'customer',
+	  'Conekta_List' => 'list',
+	  'Conekta_Invoice' => 'invoice',
+	  'Conekta_InvoiceItem' => 'invoiceitem',
+	  'Conekta_Event' => 'event',
+	  'Conekta_Transfer' => 'transfer',
+	  'Conekta_Plan' => 'plan',
+	  'Conekta_Recipient' => 'recipient',
+	  'Conekta_Subscription' => 'subscription'
+	);
+	$obj = Conekta_Util::convertToConektaObject($response, $apiKey);
+	$parent = $types[get_class($this)];
+	$obj->$parent = &$this;    
+    // Is it a array (Conekta_Object)?
+    if (strcmp(get_class($this->$member), 'Conekta_Object') == 0) {
+		$count = count($this->cards->keys());
+		$this->$member->__set($count, $obj);
 	} else {
-		$url = $this->instanceUrl() . '/' . $member;
+		$this->refreshFrom(array($member => $response), $apiKey, true);
 	}
-    list($response, $apiKey) = $requestor->request($method, $url, $params);
-    $this->refreshFrom(array($member => $response), $apiKey, true);
-    return $this;
+    return $obj;
   }
   
   //protected function _scopedUpdate($class, $id, $params=null, $apiKey=null)

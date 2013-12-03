@@ -47,7 +47,8 @@ abstract class Conekta_Util
       'event' => 'Conekta_Event',
       'transfer' => 'Conekta_Transfer',
       'plan' => 'Conekta_Plan',
-      'recipient' => 'Conekta_Recipient'
+      'recipient' => 'Conekta_Recipient',
+      'subscription' => 'Conekta_Subscription'
     );
     //if (self::isList($resp)) {
       //$mapped = array();

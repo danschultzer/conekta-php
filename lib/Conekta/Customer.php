@@ -2,6 +2,18 @@
 
 class Conekta_Customer extends Conekta_ApiResource
 {
+  public function refreshFrom($values, $apiKey, $partial=false)
+  {  
+	parent::refreshFrom($values, $apiKey, $partial);
+	$customer = $this;
+    for ($i = 0; $i <= $customer->cards.count; $i++) {
+		$customer->cards[$i]->customer = &$customer;
+	}
+	if (isset($customer->subscription)) {
+		$customer->subscription->customer = &$customer;
+	}
+  }
+  
   public static function constructFrom($values, $apiKey=null)
   {
     $class = get_class();
@@ -77,38 +89,21 @@ class Conekta_Customer extends Conekta_ApiResource
   public function update($params=null)
   {
     $class = get_class();
-    return self:: _scopedUpdate($class);
+    return self:: _scopedUpdate($class, $params);
   }
   
-  public function updateSubscription($params=null, $apiKey=null)
+  public function createCard($params=null, $apiKey=null)
   {
 	$class = get_class();
-    return self:: _scopedModifyMember($class, 'put', 'subscription', null, $params);
+    return self:: _scopedCreateMember($class, 'cards', $params);
   }
   
   public function createSubscription($params=null, $apiKey=null)
   {
 	$class = get_class();
-    return self:: _scopedModifyMember($class, 'post', 'subscription', null, $params);
+    return self:: _scopedCreateMember($class, 'subscription', $params);
   }
   
-  public function cancelSubscription($params=null, $apiKey=null)
-  {
-	$class = get_class();
-    return self:: _scopedModifyMember($class, 'post', 'subscription', 'cancel');
-  }
-  
-  public function pauseSubscription($params=null, $apiKey=null)
-  {
-	$class = get_class();
-    return self:: _scopedModifyMember($class, 'post', 'subscription', 'pause');
-  }
-  
-  public function resumeSubscription($params=null, $apiKey=null)
-  {
-    $class = get_class();
-    return self:: _scopedModifyMember($class, 'post', 'subscription', 'resume');
-  }
 
   public function deleteDiscount()
   {

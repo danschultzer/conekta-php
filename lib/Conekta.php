@@ -38,6 +38,7 @@ require(dirname(__FILE__) . '/Conekta/List.php');
 // Conekta API Resources
 require(dirname(__FILE__) . '/Conekta/Account.php');
 require(dirname(__FILE__) . '/Conekta/Card.php');
+require(dirname(__FILE__) . '/Conekta/Subscription.php');
 require(dirname(__FILE__) . '/Conekta/Balance.php');
 require(dirname(__FILE__) . '/Conekta/BalanceTransaction.php');
 require(dirname(__FILE__) . '/Conekta/Charge.php');
