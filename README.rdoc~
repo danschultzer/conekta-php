@@ -10,7 +10,6 @@ To get started, add the following to your PHP script:
 
 Simple usage looks like:
     
-    // Simple charge call
     Conekta::setApiKey('qso7o4nDGnWNMESzLxq4');
     $myCard = array('number' => '4242424242424242', 'exp_month' => 5, 'exp_year' => 2015, 'cvc' => 123, 'name' => 'Mario Moreno');
     try {
@@ -18,9 +17,7 @@ Simple usage looks like:
       echo $charge;
     } catch (Exception $e) {
       // Catch all exceptions including validation errors.
-      echo $e->getMessage();
-		}
-    // end simple charge call
+      echo $e->getMessage(); }
 
     {
         "id": "5286828b8ee31e64b7001739",
