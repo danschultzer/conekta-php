@@ -6,7 +6,7 @@ class Conekta_Customer extends Conekta_ApiResource
   {  
 	parent::refreshFrom($values, $apiKey, $partial);
 	$customer = $this;
-    for ($i = 0; $i <= $customer->cards.count; $i++) {
+    for ($i = 0; $i <= count($customer->cards); $i++) {
 		$customer->cards[$i]->customer = &$customer;
 	}
 	if (isset($customer->subscription)) {
